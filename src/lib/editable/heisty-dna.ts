@@ -44,8 +44,6 @@ export const HEISTY_DNA = {
   },
 } as const;
 
-export const GROQ_MODEL = "llama-3.3-70b-versatile";
-
 export const SYSTEM_PROMPT = `You are the Heisty Engine — a video-edit DNA compiler. You output ONLY valid JSON matching the schema. No markdown, no commentary.
 
 MISSION

@@ -1,7 +1,10 @@
+import { DEFAULT_GROQ_MODEL } from "./groq-models";
+
 const STORAGE_KEY = "editable.keys.v1";
 
 export type Keychain = {
   groqKey: string;
+  groqModel: string;
   githubPat: string;
   githubOwner: string;
   githubRepo: string;
@@ -9,6 +12,7 @@ export type Keychain = {
 
 export const DEFAULT_KEYCHAIN: Keychain = {
   groqKey: "",
+  groqModel: DEFAULT_GROQ_MODEL,
   githubPat: "",
   githubOwner: "the-entertrainer",
   githubRepo: "editable",
@@ -20,7 +24,11 @@ export function loadKeychain(): Keychain {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULT_KEYCHAIN;
     const parsed = JSON.parse(raw) as Partial<Keychain>;
-    return { ...DEFAULT_KEYCHAIN, ...parsed };
+    return {
+      ...DEFAULT_KEYCHAIN,
+      ...parsed,
+      groqModel: parsed.groqModel?.trim() || DEFAULT_GROQ_MODEL,
+    };
   } catch {
     return DEFAULT_KEYCHAIN;
   }

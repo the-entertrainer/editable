@@ -102,7 +102,9 @@ export function Studio() {
     setStatus("generating");
     setError(null);
     try {
-      const result = await generateStoryboard({ data: { theme: nextTheme, groqKey: keys.groqKey } });
+      const result = await generateStoryboard({
+        data: { theme: nextTheme, groqKey: keys.groqKey, groqModel: keys.groqModel },
+      });
       if (!result.ok) {
         setError(result.error);
         toast.error(result.error);
@@ -110,7 +112,7 @@ export function Studio() {
       }
       setBoard(result.board);
       setTheme(result.board.theme);
-      toast.success(`${result.board.title} · ${result.board.clips.length} clips`);
+      toast.success(`${result.board.title} · ${result.board.clips.length} clips · ${result.model}`);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Generation failed";
       setError(message);
